@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Category Management</h2>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+    </div>
+
+    {% if message %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endif %}
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <!-- Add Category Form -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="mb-3">Add New Category</h5>
+
+            <form method="POST" action="{{ url_for('categories') }}">
+
+                <div class="mb-3">
+                    <label class="form-label">Category Name</label>
+                    <input type="text"
+                           name="category_name"
+                           class="form-control"
+                           maxlength="100"
+                           placeholder="Example: Food, Salary, Travel"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Category Type</label>
+                    <select name="category_type" class="form-select" required>
+                        <option value="">Select Type</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Add Category
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Category List -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="mb-3">Your Categories</h5>
+
+            {% if categories %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Category Name</th>
+                                <th>Type</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for category in categories %}
+                            <tr>
+                                <td>{{ category.category_name }}</td>
+                                <td>{{ category.category_type|title }}</td>
+                                <td>
+                                    <form method="POST"
+                                          action="{{ url_for('delete_category', category_id=category.category_id) }}"
+                                          onsubmit="return confirm('Are you sure you want to delete this category?');">
+
+                                        <button type="submit"
+                                                class="btn btn-danger btn-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted">No categories added yet.</p>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
