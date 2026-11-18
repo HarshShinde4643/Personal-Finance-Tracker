@@ -274,10 +274,4 @@ These libraries help transform financial transaction data into meaningful visual
 - GitHub: [HarshShinde4643](https://github.com/HarshShinde4643)
 - Project: Personal Finance Tracker
 
----
 
-## ⭐ Support
-
-If you find this project useful, consider giving the repository a ⭐ on GitHub.
-
-**Developed using Python, Flask, MySQL, and Data Visualization Technologies.**
